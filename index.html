@@ -1445,45 +1445,40 @@ searchInput.addEventListener(
 );
 
 
-function openImage(src){
+function openImage(src) {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
 
-  document
-    .getElementById("lightboxImg")
-    .src=src;
-
-  document
-    .getElementById("lightbox")
-    .classList.add("show");
-
+  lightboxImg.src = src;
+  lightbox.classList.add("show");
 }
 
+function closeImage() {
+  const lightbox = document.getElementById("lightbox");
 
-document
-  .getElementById("close")
-  .onclick=()=>{
+  lightbox.classList.remove("show");
 
-    document
-      .getElementById("lightbox")
-      .classList
-      .remove("show");
+  document.getElementById("lightboxImg").src = "";
 
-  };
+  // Pastikan semua kartu game tetap tampil
+  document.getElementById("gallery").style.display = "grid";
+}
 
+// Klik di mana saja pada popup untuk menutup gambar
+document.getElementById("lightbox").onclick = function() {
+  closeImage();
+};
 
-document
-  .getElementById("lightbox")
-  .onclick=e=>{
+// Tombol X tetap berfungsi
+document.getElementById("close").onclick = function(e) {
+  e.stopPropagation();
+  closeImage();
+};
 
-    if(e.target.id==="lightbox"){
-
-      e.currentTarget
-        .classList
-        .remove("show");
-
-    }
-
-  };
-
+// Klik gambar juga langsung menutup popup
+document.getElementById("lightboxImg").onclick = function() {
+  closeImage();
+};
 
 render(data);
 </script>
